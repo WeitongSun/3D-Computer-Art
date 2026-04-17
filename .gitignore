@@ -1,0 +1,34 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# Temp files
+*.log
+*.tmp
+*.bak
+
+# Future: if you later add Unity code samples into this repo,
+# uncomment the Unity section below.
+
+# ---- Unity (uncomment if adding Unity sample projects) ----
+# [Ll]ibrary/
+# [Tt]emp/
+# [Oo]bj/
+# [Bb]uild/
+# [Bb]uilds/
+# [Ll]ogs/
+# [Uu]serSettings/
+# [Mm]emoryCaptures/
+# [Rr]ecordings/
+# *.csproj
+# *.sln
+# *.apk
+# *.aab
+# *.unitypackage
