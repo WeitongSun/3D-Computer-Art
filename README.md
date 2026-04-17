@@ -13,8 +13,8 @@
 # Unity + Meta Quest 3 — Setup & Deployment Guide
 ## Unity + Meta Quest 3 — 安装与部署教程
 
-**Created by [ShanMu Sun](https://github.com/<YOUR-GITHUB-USERNAME>) · Part of the *3D Computer Art* course.**
-**作者：[ShanMu Sun](https://github.com/<YOUR-GITHUB-USERNAME>) · 《3D Computer Art》课程配套教程。**
+**Created by [ShanMu Sun](https://shanmu.zip/) · Part of the *3D Computer Art* course.**
+**作者：[ShanMu Sun](https://shanmu.zip/) · 《3D Computer Art》课程配套教程。**
 
 > A bilingual (English / 中文), step-by-step guide that takes you from a fresh computer to a working Unity project running on a Meta Quest 3 headset — Unity install, Meta XR packages, build configuration, and sideloading via SideQuest.
 >
