@@ -53,9 +53,9 @@ If you use this guide — in a class, workshop, blog post, or any other teaching
 
 **Attribution text / 署名文本:**
 
-> Adapted from *Unity + Meta Quest 3 Setup & Deployment Guide* by ShanMu Sun — https://github.com/<YOUR-GITHUB-USERNAME>/unity-metaquest3-setup-guide
+> Adapted from *Unity + Meta Quest 3 Setup & Deployment Guide* by ShanMu Sun — https://github.com/WeitongSun/3D-Computer-Art.git
 >
-> 改编自 ShanMu Sun 所著《Unity + Meta Quest 3 Setup & Deployment Guide》—— https://github.com/<YOUR-GITHUB-USERNAME>/unity-metaquest3-setup-guide
+> 改编自 ShanMu Sun 所著《Unity + Meta Quest 3 Setup & Deployment Guide》—— https://github.com/WeitongSun/3D-Computer-Art.git
 
 **BibTeX:**
 
@@ -64,7 +64,7 @@ If you use this guide — in a class, workshop, blog post, or any other teaching
   author       = {Sun, ShanMu},
   title        = {Unity + Meta Quest 3 Setup \& Deployment Guide},
   year         = {2026},
-  howpublished = {\url{https://github.com/<YOUR-GITHUB-USERNAME>/unity-metaquest3-setup-guide}},
+  howpublished = {\url{https://github.com/WeitongSun/3D-Computer-Art.git}},
   note         = {Part of the 3D Computer Art course}
 }
 ```
