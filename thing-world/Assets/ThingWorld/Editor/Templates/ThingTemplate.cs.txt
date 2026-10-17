@@ -1,0 +1,104 @@
+using UnityEngine;
+
+// ===========================================================================
+//  This is YOUR Thing.  Made by: #CREATOR#
+//
+//  How it works: Thing World calls the methods below when something happens.
+//  You fill them in with actions. Every action is listed in the Handbook
+//  (thing-world/HANDBOOK.md). A few you can use right away:
+//
+//     Speak("hello");          Spark(Color.red, 40);       PlaySound(0);
+//     Wander();                WalkTo(other);              StopMoving(3);
+//     LookAtPlayer();          FollowPlayer();             RunFromPlayer();
+//     SetColor(Color.blue);    ResetColor();               SetSize(1.5f);
+//     PlayAnimation(1);        After(2, Spark);            Repeat(5, Wander);
+//
+//  Lines starting with // are comments: the computer ignores them.
+//  Delete a method you don't need, or just leave it empty.
+// ===========================================================================
+
+public class #CLASSNAME# : Thing
+{
+    // ----- 1. WHO ARE YOU? Runs once, before anything else. -----------------
+    protected override void Setup()
+    {
+        settings.walkSpeed = 1.2f;          // meters per second
+        settings.autoWander = true;         // walk around on your own?
+        settings.wanderInterval = 6f;       // seconds between new destinations
+        settings.wanderRadius = 8f;         // how far you wander (meters)
+        settings.neighborRadius = 3f;       // how close counts as "meeting" (meters)
+        settings.playerNearRadius = 2f;     // how close the player must be to be "near"
+        settings.canBeGrabbed = true;       // can the player pick you up?
+        settings.myColor = Color.yellow;    // your signature color
+    }
+
+    // ----- 2. YOU APPEAR IN THE WORLD. Runs once. -------------------------
+    protected override void OnBorn()
+    {
+        Speak("I am here.");
+    }
+
+    // ----- 3. EVERY FRAME. Runs ~72 times per second. Keep it light! ----------
+    protected override void EveryFrame()
+    {
+    }
+
+    // ----- 4. MEETING OTHER THINGS --------------------------------------------
+    protected override void OnMeetSomeone(Thing other)
+    {
+        // 'other' is the Thing you just met. other.ThingName is its name.
+        LookAt(other.transform.position);
+    }
+
+    protected override void OnLeaveSomeone(Thing other)
+    {
+    }
+
+    protected override void OnNeighborSpeaks(Thing speaker, string words)
+    {
+        // 'words' is what they said.
+    }
+
+    protected override void OnNeighborSparks(Thing who)
+    {
+    }
+
+    // ----- 5. THE WORLD --------------------------------------------------------
+    protected override void OnSunrise()
+    {
+    }
+
+    protected override void OnSunset()
+    {
+    }
+
+    protected override void OnArrived()
+    {
+        // You reached the place you were walking to.
+    }
+
+    // ----- 6. THE PLAYER (the person in the headset) --------------------------
+    protected override void OnPlayerNear()
+    {
+        LookAtPlayer();
+    }
+
+    protected override void OnPlayerLeave()
+    {
+    }
+
+    protected override void OnGrabbed()
+    {
+        Speak("!");
+    }
+
+    protected override void OnReleased(float throwSpeed)
+    {
+        // throwSpeed is in meters per second. 0 = gently put down, 5+ = thrown hard.
+    }
+
+    protected override void OnLanded()
+    {
+        // You are back on your feet.
+    }
+}
