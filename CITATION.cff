@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this guide or the Thing World framework in teaching or other work, please cite it as below and link to this repository."
+title: "Unity + Meta Quest 3 Setup & Deployment Guide"
+type: software
+authors:
+  - family-names: Sun
+    given-names: ShanMu
+    website: "https://shanmu.zip/"
+version: "2.0"
+date-released: 2026-10-18
+repository-code: "https://github.com/WeitongSun/3D-Computer-Art"
+url: "https://github.com/WeitongSun/3D-Computer-Art"
+license: CC-BY-NC-4.0
+keywords:
+  - Unity
+  - Meta Quest 3
+  - OpenXR
+  - XR Interaction Toolkit
+  - virtual reality
+  - art education

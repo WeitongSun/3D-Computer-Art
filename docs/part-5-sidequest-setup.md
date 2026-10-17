@@ -1,98 +1,97 @@
-> **Unity + Meta Quest 3 Setup Guide — Part 5 / 6**
-> *Created by [ShanMu Sun](https://github.com/<YOUR-GITHUB-USERNAME>) · 3D Computer Art · [Back to Index](../README.md)*
+> **Unity + Meta Quest 3 Setup Guide (v2) — Part 5 / 7**
+> *Created by [ShanMu Sun](https://shanmu.zip/) · 3D Computer Art · [Back to Index](../README.md)*
 
-# Part 5 — Download & Set Up SideQuest
-# 第五部分 — 下载与设置 SideQuest
+# Part 5 — Headset Setup: Developer Mode, Drivers & Tools
+# 第五部分 — 头显设置：开发者模式、驱动与工具
 
-## Setting Up SideQuest · 配置 SideQuest
+To install your own apps on a Quest, the headset must be in **Developer Mode**. This is done once per headset.
 
-SideQuest is a free desktop app that lets you install APK files (Android app packages) directly onto your Quest headset **without going through the Meta Store**. This is how you'll deploy your Unity builds during development.
+要在 Quest 上安装自己的应用，头显必须开启**开发者模式**。每台头显只需设置一次。
 
-SideQuest 是一款免费桌面软件，可以**绕过 Meta Store**把 APK（安卓应用包）直接装到 Quest 头显上。开发阶段我们就用它来部署 Unity 构建。
+> **🎓 For classes · 课堂说明**
+> Meta requires the account that enables Developer Mode to be **verified** and **18 or older**. In most classes the **instructor enables Developer Mode on the class headsets** once; students then only need Step 4 (connecting the cable and allowing USB debugging).
+> Meta 要求开启开发者模式的账号必须**已验证**且**年满 18 岁**。大多数课堂由**老师统一为课堂头显开启开发者模式**，学生只需要做第 4 步（连线并允许 USB 调试）。
 
 ---
 
 ### What you need · 所需材料
 
-- A Windows, macOS, or Linux computer · 一台 Windows / macOS / Linux 电脑
-- A USB-C cable (the one that came with your Quest works fine) · 一根 USB-C 数据线（Quest 自带的那根就行）
-- The **Meta Horizon app** on your phone (iOS or Android) · 手机上的 **Meta Horizon** app（iOS 或 Android）
-- A **Meta developer account** (free to create) · 一个 **Meta 开发者账号**（免费注册）
+- A Mac or Windows computer with Unity set up (Parts 1–4) · 一台已按第 1–4 部分配置好 Unity 的 Mac 或 Windows 电脑
+- A **data-capable** USB-C cable. Charge-only cables won't work. · 一根**支持数据传输**的 USB-C 线，仅充电线无法使用。
+- The **Meta Horizon** app on a phone (iOS or Android), paired with the headset · 手机上已与头显配对的 **Meta Horizon** app（iOS 或 Android）
+- A **Meta developer account** in a developer team/organization · 一个加入了开发者团队/组织的 **Meta 开发者账号**
 
 ---
 
-### Step 1 — Create a Meta Developer Account · 注册 Meta 开发者账号
+### Step 1 — Meta developer account · Meta 开发者账号
 
-Go to: <https://developer.oculus.com> and sign in with the **same Meta/Facebook account linked to your Quest headset**.
-
-前往 <https://developer.oculus.com>，使用**与 Quest 头显绑定的同一个 Meta/Facebook 账号**登录。
-
-Accept the Developer Agreement when prompted. This is free and requires no programming skills.
-
-系统提示时同意开发者协议。免费，无需编程背景。
+1. Go to <https://developers.meta.com/horizon/> and sign in with the **same Meta account that is logged into the headset**. · 打开 <https://developers.meta.com/horizon/>，用**头显上登录的同一个 Meta 账号**登录。
+2. Create or join a **developer organization (team)** and accept the developer agreement. · 创建或加入一个**开发者组织（团队）**，并同意开发者协议。
+3. Check that your account is **verified** (Developer Dashboard → *Verification*). · 确认账号已**验证**（开发者后台 → *Verification*）。
 
 ---
 
-### Step 2 — Enable Developer Mode on your Quest 3 · 在 Quest 3 上开启开发者模式
+### Step 2 — Turn on Developer Mode · 开启开发者模式
 
-Developer Mode (now called **Debug Mode** in newer Meta app versions) allows USB debugging and sideloading.
-
-开发者模式（在较新版本的 Meta app 中叫 **Debug Mode**）可以启用 USB 调试和侧载。
-
-- Open the **Meta Horizon app** on your phone. · 打开手机上的 **Meta Horizon** app。
-- Tap **Menu** (bottom right) → **Devices** → select your Quest 3. · 点右下角 **Menu** → **Devices** → 选择你的 Quest 3。
-- Tap **Developer Mode** or **Debug Mode** and toggle it **ON**. · 点 **Developer Mode** 或 **Debug Mode**，开关打到 **ON**。
-- Put on your headset. You may see a prompt — accept it. · 戴上头显，如有提示，同意。
-- **Restart your headset** once after enabling. · 启用后**重启一次**头显。
+1. Open the **Meta Horizon** app on your phone. · 打开手机上的 **Meta Horizon** app。
+2. Tap the **headset icon** in the toolbar, then tap your headset. · 点击工具栏中的**头显图标**，再点你的头显。
+3. Tap **Headset Settings → Developer Mode** and switch it **on**. · 点击 **Headset Settings → Developer Mode**，打开开关。
+4. Restart the headset. · 重启头显。
 
 > **⚠️ Can't find Developer Mode? · 找不到开发者模式？**
-> If you do not see **Developer Mode**, make sure you have completed the Meta developer account step first.
-> 找不到 **Developer Mode** 选项，说明 Meta 开发者账号还没注册好。
->
-> The option only appears after you have joined or created a developer organization at developer.oculus.com.
-> 必须先在 developer.oculus.com 加入或创建一个开发者组织，这个选项才会出现。
+> It only appears after the account has joined a developer organization and is verified (Step 1).
+> 只有账号加入了开发者组织并完成验证后（第 1 步），这个选项才会出现。
 
 ---
 
-### Step 3 — Download SideQuest on your computer · 下载 SideQuest
+### Step 3 — Windows only: install the USB (ADB) driver · 仅 Windows：安装 USB（ADB）驱动
 
-Download SideQuest · 下载地址：<https://sidequestvr.com/setup-howto>
+**Mac users skip this step — macOS needs no driver.** · **Mac 用户跳过这一步 —— macOS 不需要驱动。**
 
-- Click **Get SideQuest** → choose the **Easy Installer** for your OS. · 点击 **Get SideQuest** → 选择对应系统的 **Easy Installer**。
-- Run the installer. On Windows, you may need to confirm a security prompt — click **More info → Run anyway**. · 运行安装包。Windows 用户可能会遇到安全提示，点 **More info → Run anyway**。
-- Launch SideQuest after installation. · 安装完成后启动 SideQuest。
-
----
-
-### Step 4 — Connect your Quest 3 to SideQuest · 连接 Quest 3 与 SideQuest
-
-- Plug your Quest 3 into your computer with a USB-C cable. · 用 USB-C 线把 Quest 3 连到电脑。
-- Put on your headset. A prompt will appear: **"Allow USB debugging?"** — tap **Allow**. · 戴上头显，会弹出 **"Allow USB debugging?"**，选 **Allow**。
-- Also allow **"Allow access to data"** if prompted (required for file access). · 如果弹出 **"Allow access to data"**，同样选 **Allow**（需要访问文件）。
-- Back on your computer in SideQuest, look at the **top right** — the dot should turn **green**. **Green = connected.** · 回到电脑端 SideQuest，看**右上角**的小圆点：变**绿**即为连接成功。
+1. Download **Oculus ADB Drivers** from <https://developers.meta.com/horizon/downloads/> (search "ADB"). · 从 <https://developers.meta.com/horizon/downloads/> 下载 **Oculus ADB Drivers**（搜索 "ADB"）。
+2. Unzip it and open the `usb_driver` folder. · 解压后打开 `usb_driver` 文件夹。
+3. Right-click **`android_winusb.inf`** → **Install**. · 右键 **`android_winusb.inf`** → **安装**。
 
 ---
 
-> **🔧 Connection troubleshooting · 连接故障排查**
-> - If the dot stays red: try a different USB port or cable, or restart SideQuest. · 小圆点一直是红色：换 USB 口、换线，或重启 SideQuest。
-> - **Windows users:** SideQuest installs ADB drivers automatically, but if it fails, download Oculus ADB drivers from developer.oculus.com. · **Windows 用户**：SideQuest 会自动装 ADB 驱动，若失败请从 developer.oculus.com 下载 Oculus ADB 驱动。
-> - Make sure your headset is on and unlocked — a sleeping headset will not connect. · 头显必须处于开机并解锁状态，休眠中无法连接。
+### Step 4 — Connect the headset · 连接头显
+
+1. Turn on the headset and plug it into your computer with the USB-C cable. · 打开头显，用 USB-C 线连接电脑。
+2. Put the headset on. When **"Allow USB debugging?"** appears, check **Always allow from this computer** and tap **Allow**. · 戴上头显，出现 **"Allow USB debugging?"** 时，勾选 **Always allow from this computer**，然后点 **Allow**。
+3. If you don't see the prompt: on the headset open **Quick Settings → Settings → Developer**, turn on **MTP Notification**, then unplug and replug the cable. · 如果没看到提示：在头显中打开 **快捷设置 → 设置 → Developer（开发者）**，开启 **MTP Notification**，然后拔插一次数据线。
+4. In Unity, open **File → Build Profiles → Meta Quest**, click **Refresh** next to **Run Device**. Your Quest should appear in the list. · 在 Unity 中打开 **File → Build Profiles → Meta Quest**，点击 **Run Device** 旁的 **Refresh**，列表中应出现你的 Quest。
+
+---
+
+### Step 5 (optional) — Desktop tools · 第 5 步（可选）— 桌面工具
+
+You can build and install straight from Unity (Part 6), so these are optional. They are useful for installing APK files someone sends you, recording the headset view, or managing apps.
+
+你可以直接从 Unity 打包安装（第六部分），所以以下工具是可选的。它们适合安装别人发给你的 APK、录制头显画面或管理应用。
+
+| Tool · 工具 | Mac | Windows | Notes · 说明 |
+|---|---|---|---|
+| **Meta Quest Developer Hub (MQDH)** | ✅ | ✅ | Meta's official tool. Install APKs, cast and record, view logs. · Meta 官方工具，可安装 APK、投屏录屏、查看日志。 |
+| **SideQuest** | ✅ | ✅ | Free community tool for installing APKs (*Install APK from folder*). · 免费社区工具，用于安装 APK。 |
+
+- MQDH: <https://developers.meta.com/horizon/downloads/> (search "Meta Quest Developer Hub")
+- SideQuest: <https://sidequestvr.com/setup-howto>
 
 ---
 
 ### Checklist · 本章检查清单
 
-- [ ] Meta developer account created · Meta 开发者账号已创建
-- [ ] Developer / Debug Mode toggled ON in Meta Horizon app · Meta Horizon app 已开启开发者/调试模式
-- [ ] Headset restarted after enabling Developer Mode · 头显已重启
-- [ ] SideQuest installed on computer · SideQuest 已安装
-- [ ] Headset connects to SideQuest (green dot) · 头显成功连接 SideQuest（绿点）
+- [ ] Developer account verified and in a developer organization · 开发者账号已验证并加入开发者组织
+- [ ] Developer Mode ON, headset restarted · 已开启开发者模式并重启头显
+- [ ] Windows only: ADB driver installed · 仅 Windows：已安装 ADB 驱动
+- [ ] USB debugging allowed ("Always allow from this computer") · 已允许 USB 调试（"始终允许这台电脑"）
+- [ ] Quest appears in Unity's **Run Device** list · Quest 出现在 Unity 的 **Run Device** 列表中
 
 ---
 
-**← Previous · 上一章** [Part 4 — Build Settings for Quest 3](part-4-build-settings.md)
-**Next · 下一章 →** [Part 6 — Build in Unity & Sideload to Quest 3](part-6-build-sideload.md)
+**← Previous · 上一章** [Part 4 — Check Player & Quality Settings](part-4-build-settings.md)
+**Next · 下一章 →** [Part 6 — Build & Run on the Quest 3](part-6-build-sideload.md)
 
 ---
 
-<sub>*3D Computer Art* by **ShanMu Sun** · © ShanMu Sun · [github.com/&lt;YOUR-GITHUB-USERNAME&gt;](https://github.com/<YOUR-GITHUB-USERNAME>) · Licensed under [CC BY-NC 4.0](../LICENSE)</sub>
+<sub>*3D Computer Art* by **ShanMu Sun** · © ShanMu Sun · [github.com/WeitongSun/3D-Computer-Art](https://github.com/WeitongSun/3D-Computer-Art) · Licensed under [CC BY-NC 4.0](../LICENSE)</sub>

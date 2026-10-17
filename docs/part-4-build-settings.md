@@ -1,73 +1,79 @@
-> **Unity + Meta Quest 3 Setup Guide — Part 4 / 6**
-> *Created by [ShanMu Sun](https://github.com/<YOUR-GITHUB-USERNAME>) · 3D Computer Art · [Back to Index](../README.md)*
+> **Unity + Meta Quest 3 Setup Guide (v2) — Part 4 / 7**
+> *Created by [ShanMu Sun](https://shanmu.zip/) · 3D Computer Art · [Back to Index](../README.md)*
 
-# Part 4 — Build Settings for Quest 3
-# 第四部分 — Quest 3 构建设置
+# Part 4 — Check Player & Quality Settings
+# 第四部分 — 检查 Player 与画质设置
 
-## Configuring Build Settings · 配置构建设置
+The Meta Quest build profile (Part 3) already set the technical settings. In this part you give your app a name and check that nothing is missing.
 
-Before you can build and deploy to the Quest headset, you need to switch Unity's build target to **Android** and configure a few settings.
-
-在构建并部署到 Quest 头显之前，需要将 Unity 的构建目标切换为 **Android**，并做几项关键设置。
+Meta Quest 构建配置（第三部分）已经完成了技术设置。这一章只需要给应用命名，并检查有没有遗漏。
 
 ---
 
-### Switch Platform to Android · 切换平台为 Android
+### Step 1 — Name your app · 给应用命名
 
-- Go to **File → Build Settings**. · 打开 **File → Build Settings**。
-- Select **Android** from the platform list. · 在平台列表中选择 **Android**。
-- Click **Switch Platform** (bottom left). Unity will reimport assets — this may take a minute. · 点击左下角 **Switch Platform**（切换平台）。Unity 会重新导入资源，需要等几分钟。
+Go to **File → Build Profiles → Meta Quest → Player Settings** (or **Edit → Project Settings → Player**).
 
----
+打开 **File → Build Profiles → Meta Quest → Player Settings**（或 **Edit → Project Settings → Player**）。
 
-### Player Settings · 玩家设置
+| Setting · 设置 | Value · 值 |
+|---|---|
+| Company Name · 公司名 | Your name or school, **no spaces** · 你的名字或学校，**不要空格** |
+| Product Name · 产品名 | The name shown in the headset · 头显里显示的名字 |
+| Package Name · 包名 (*Other Settings → Identification*) | `com.yourname.projectname`, lowercase, e.g. `com.shanmu.thingworld` · 全小写 |
+| Version · 版本 | `0.1`, then increase for each new build if you like · 之后每次打包可以递增 |
 
-Still in Build Settings, click **Player Settings** (bottom left). Configure these: · 仍在 Build Settings 界面，点击左下角 **Player Settings**（玩家设置），按下表配置：
-
-| Setting · 设置                | Value · 值                                                |
-|-------------------------------|-----------------------------------------------------------|
-| Company Name · 公司名         | Your name or VCU (anything, no spaces) · 你的名字或学校，**不要空格** |
-| Product Name · 产品名         | Your project name · 你的项目名                             |
-| Package Name · 包名           | `com.yourname.projectname` (e.g. `com.shanmu.myscene`)    |
-| Minimum API Level · 最低 API  | Android 10 / API Level 29                                 |
-| Target API Level · 目标 API   | Automatic (highest installed) · 自动（已安装的最高版本）   |
-| Scripting Backend · 脚本后端  | **IL2CPP**                                                |
-| Target Architecture · 目标架构 | **ARM64 only** (uncheck ARMv7) · **仅 ARM64**（取消勾选 ARMv7） |
+> **⚠️ Two apps with the same Package Name overwrite each other on the headset.** In a class sharing headsets, every student needs a unique package name.
+> **包名相同的两个应用会在头显上互相覆盖。** 共用头显的课堂里，每个学生的包名必须不同。
 
 ---
 
-> **⚠️ IL2CPP + ARM64 is required for Meta Quest · Meta Quest 必须使用 IL2CPP + ARM64**
-> Meta Quest does **not** support the Mono scripting backend or ARMv7 architecture.
-> Meta Quest **不支持** Mono 脚本后端或 ARMv7 架构。
->
-> If you skip this, your build will fail with **"IL2CPP required"** errors.
-> 如果忽略这一步，构建会失败并报 **"IL2CPP required"** 错误。
+### Step 2 — Confirm what the build profile set · 确认构建配置已自动设置的项目
+
+In **Player → Other Settings**, these should already be correct. If one is wrong, fix it here.
+
+在 **Player → Other Settings** 中，以下项目应已正确设置；如有不对，在这里修改。
+
+| Setting · 设置 | Expected value · 应为 |
+|---|---|
+| Graphics APIs · 图形接口 | **Vulkan** |
+| Scripting Backend · 脚本后端 | **IL2CPP** |
+| Target Architectures · 目标架构 | **ARM64** only · 仅 **ARM64** |
+| Minimum API Level · 最低 API | Android 10 (API 29) or higher · 或更高 |
+| Target API Level · 目标 API | Android 12L (API 32) or Automatic · 或 Automatic |
+| Texture Compression · 纹理压缩 (*File → Build Profiles → Meta Quest*) | **ASTC** |
+
+> **💡 Player Settings Overrides · Player 设置覆盖**
+> Most Player Settings are shared with the regular Android platform. To change one only for Meta Quest, open the Meta Quest build profile and enable it under **Player Settings Overrides**.
+> 大部分 Player 设置与普通 Android 平台共用。如果只想对 Meta Quest 修改某一项，打开 Meta Quest 构建配置，在 **Player Settings Overrides** 中启用该项。
 
 ---
 
-### Quality & Graphics Settings · 质量与图形设置
+### Step 3 — Quality & performance basics · 画质与性能基础
 
-- Go to **Edit → Project Settings → Quality**. Set all quality levels to use your URP Asset. · 打开 **Edit → Project Settings → Quality**，将所有质量等级都设为使用你的 URP Asset。
-- Go to **Edit → Project Settings → Graphics**. Set the **Scriptable Render Pipeline Settings** to your URP Asset (usually in `Assets/Settings/`). · 打开 **Edit → Project Settings → Graphics**，将 **Scriptable Render Pipeline Settings** 设为你的 URP Asset（通常位于 `Assets/Settings/`）。
-- For Quest 3 performance: **Edit → Project Settings → XR Plug-in Management → OpenXR** → set **Render Mode** to **Multi Pass** or **Single Pass Instanced** (**Single Pass Instanced** is faster). · Quest 3 性能建议：**Edit → Project Settings → XR Plug-in Management → OpenXR** 中将 **Render Mode** 设为 **Multi Pass** 或 **Single Pass Instanced**（**Single Pass Instanced** 更快）。
+Quest 3 is a mobile computer that has to draw **two images at 72–90 frames per second**. A scene that runs smoothly on your laptop can stutter in the headset.
+
+Quest 3 是一台移动设备，需要以 **72–90 帧/秒** 同时绘制**两幅画面**。在笔记本上流畅的场景，在头显里可能会卡。
+
+- The build profile adds a **Meta Quest (Build Profile)** quality level. Keep it selected for Meta Quest in **Edit → Project Settings → Quality**. · 构建配置会新增一个 **Meta Quest (Build Profile)** 画质等级，在 **Edit → Project Settings → Quality** 中保持 Meta Quest 使用这一项。
+- In your URP asset (usually in `Assets/Settings/`): turn **HDR off**, set **Anti Aliasing (MSAA)** to **4x**, and keep shadows simple. · 在 URP 资源（通常在 `Assets/Settings/`）里：关闭 **HDR**，**抗锯齿（MSAA）**设为 **4x**，阴影尽量简单。
+- Avoid heavy post-processing (bloom, depth of field, motion blur). · 避免使用重的后处理（泛光、景深、运动模糊）。
+- Keep polygon counts and texture sizes reasonable: textures **2048 px or smaller**, and as few materials per object as possible. · 控制面数和贴图：贴图 **2048 px 或更小**，每个物体的材质越少越好。
 
 ---
 
 ### Checklist · 本章检查清单
 
-- [ ] Platform switched to Android · 平台已切换到 Android
-- [ ] Package Name set (e.g. `com.yourname.projectname`) · 包名已设置
-- [ ] Minimum API Level ≥ 29 · 最低 API ≥ 29
-- [ ] Scripting Backend = IL2CPP · 脚本后端为 IL2CPP
-- [ ] Target Architecture = ARM64 only · 目标架构仅 ARM64
-- [ ] Quality & Graphics pipeline assets set to URP · 质量与图形的管线资源已设为 URP
-- [ ] Render Mode set to Single Pass Instanced (recommended) · Render Mode 设为 Single Pass Instanced
+- [ ] Company Name, Product Name and a unique Package Name set · 已设置公司名、产品名和唯一的包名
+- [ ] Vulkan, IL2CPP, ARM64, API levels confirmed · 已确认 Vulkan、IL2CPP、ARM64、API 等级
+- [ ] Texture Compression = ASTC · 纹理压缩为 ASTC
+- [ ] URP asset: HDR off, MSAA 4x · URP 资源：关闭 HDR，MSAA 4x
 
 ---
 
-**← Previous · 上一章** [Part 3 — Meta XR Packages & OpenXR Setup](part-3-meta-xr-openxr.md)
-**Next · 下一章 →** [Part 5 — Download & Set Up SideQuest](part-5-sidequest-setup.md)
+**← Previous · 上一章** [Part 3 — Meta Quest Build Profile, OpenXR & XR Interaction Toolkit](part-3-meta-xr-openxr.md)
+**Next · 下一章 →** [Part 5 — Headset Setup](part-5-sidequest-setup.md)
 
 ---
 
-<sub>*3D Computer Art* by **ShanMu Sun** · © ShanMu Sun · [github.com/&lt;YOUR-GITHUB-USERNAME&gt;](https://github.com/<YOUR-GITHUB-USERNAME>) · Licensed under [CC BY-NC 4.0](../LICENSE)</sub>
+<sub>*3D Computer Art* by **ShanMu Sun** · © ShanMu Sun · [github.com/WeitongSun/3D-Computer-Art](https://github.com/WeitongSun/3D-Computer-Art) · Licensed under [CC BY-NC 4.0](../LICENSE)</sub>

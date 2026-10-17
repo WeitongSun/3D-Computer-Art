@@ -15,8 +15,8 @@ You **must** do **both** of the following — this is a condition of the [CC BY-
 1. **Keep the author's name visible.** Every distributed copy (printed handout, slide deck, LMS page, PDF, etc.) must display **"ShanMu Sun"** as the author in a place students can actually see.
    **保留作者署名。** 任何分发的副本（纸质讲义、幻灯片、LMS 页面、PDF 等）必须在学生能看到的位置显示作者 **"ShanMu Sun"**。
 
-2. **Link back to this repository.** Include the repository URL — `https://github.com/<YOUR-GITHUB-USERNAME>/unity-metaquest3-setup-guide` — so students can find the original and any updates.
-   **附上本仓库链接。** 提供仓库地址 `https://github.com/<YOUR-GITHUB-USERNAME>/unity-metaquest3-setup-guide`，让学生能找到原始版本和后续更新。
+2. **Link back to this repository.** Include the repository URL — `https://github.com/WeitongSun/3D-Computer-Art` — so students can find the original and any updates.
+   **附上本仓库链接。** 提供仓库地址 `https://github.com/WeitongSun/3D-Computer-Art`，让学生能找到原始版本和后续更新。
 
 A citation-only mention in a footnote or bibliography is **not sufficient** if the guide itself is reproduced or adapted. The credit has to travel with the material.
 
@@ -55,4 +55,4 @@ Spot a typo, a broken link, or a step that's out of date with a newer Unity or M
 
 ---
 
-<sub>© ShanMu Sun · 3D Computer Art · [github.com/&lt;YOUR-GITHUB-USERNAME&gt;](https://github.com/<YOUR-GITHUB-USERNAME>) · Licensed under [CC BY-NC 4.0](LICENSE)</sub>
+<sub>© ShanMu Sun · 3D Computer Art · [github.com/WeitongSun/3D-Computer-Art](https://github.com/WeitongSun/3D-Computer-Art) · Licensed under [CC BY-NC 4.0](LICENSE)</sub>

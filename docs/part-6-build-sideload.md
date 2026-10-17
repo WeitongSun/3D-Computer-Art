@@ -1,82 +1,84 @@
-> **Unity + Meta Quest 3 Setup Guide — Part 6 / 6**
-> *Created by [ShanMu Sun](https://github.com/<YOUR-GITHUB-USERNAME>) · 3D Computer Art · [Back to Index](../README.md)*
+> **Unity + Meta Quest 3 Setup Guide (v2) — Part 6 / 7**
+> *Created by [ShanMu Sun](https://shanmu.zip/) · 3D Computer Art · [Back to Index](../README.md)*
 
-# Part 6 — Build in Unity & Sideload to Quest 3
-# 第六部分 — 构建并侧载到 Quest 3
+# Part 6 — Build & Run on the Quest 3
+# 第六部分 — 打包并在 Quest 3 上运行
 
-## Building & Deploying Your App · 构建并部署你的应用
+An **APK** is an Android app package — the file format that runs on Meta Quest. Unity builds the APK and can install it on the connected headset in one step.
 
-### Step 1 — Build the APK in Unity · 在 Unity 中构建 APK
-
-An **APK** is the Android app package — the file format that runs on Meta Quest.
-
-**APK** 是 Android 应用包，也是 Meta Quest 上运行的文件格式。
-
-- In Unity, go to **File → Build Settings**. Make sure **Android** is selected as the platform. · 打开 **File → Build Settings**，确认平台是 **Android**。
-- **Add your scene:** click **Add Open Scenes** to include your current scene in the build. · 点击 **Add Open Scenes** 把当前场景加入构建。
-- Click **Build**. Choose a folder to save the APK (create a folder called **Builds** in your project). · 点击 **Build**，选择保存 APK 的文件夹（建议在项目里新建一个 **Builds** 文件夹）。
-- Unity will compile and build — this can take 5–15 minutes depending on your project. · Unity 会编译并构建，视项目大小需要 5–15 分钟。
-- When done, you will find a `.apk` file in your chosen folder. · 完成后，你选择的文件夹里会出现一个 `.apk` 文件。
+**APK** 是 Android 应用包，也是 Meta Quest 上运行的文件格式。Unity 可以一步完成打包并安装到已连接的头显上。
 
 ---
 
-> **💡 Build vs Build and Run · Build 与 Build and Run 的区别**
-> - **Build** creates the APK file only — you then manually install it with SideQuest. · **Build** 只生成 APK，之后用 SideQuest 手动安装。
-> - **Build and Run** tries to install directly if a device is connected via ADB. This works but SideQuest gives you more control. · **Build and Run** 在 ADB 已连接时会直接安装，但 SideQuest 给你更多控制。
->
-> For class, use **Build** to create the APK, then install via SideQuest. · 课堂上请用 **Build** 生成 APK，再通过 SideQuest 安装。
+### Step 1 — Make a scene the player can stand in · 准备一个玩家能站进去的场景
+
+A VR scene needs an **XR Origin** — the player's head and hands. Without it, the app shows a frozen view.
+
+VR 场景必须有一个 **XR Origin** —— 玩家的头和手。没有它，应用里画面会卡住不动。
+
+1. In the **Project** window, search `XR Origin (XR Rig)` (from the Starter Assets you imported in Part 3). · 在 **Project** 窗口搜索 `XR Origin (XR Rig)`（来自第三部分导入的 Starter Assets）。
+2. Drag it into your scene. Delete the scene's original **Main Camera** — the XR Origin has its own camera. · 把它拖进场景，并删除场景里原有的 **Main Camera** —— XR Origin 自带相机。
+3. Add something to stand on (**GameObject → 3D Object → Plane**) and something to look at. · 添加一个能站的地面（**GameObject → 3D Object → Plane**）和一些可看的物体。
+4. Save the scene (**Cmd/Ctrl + S**). · 保存场景（**Cmd/Ctrl + S**）。
 
 ---
 
-### Step 2 — Sideload the APK with SideQuest · 用 SideQuest 侧载 APK
+### Step 2 — Build and Run · 打包并运行
 
-Make sure your Quest 3 is connected and SideQuest shows a **green dot** before proceeding. · 开始前确认 Quest 3 已连接，且 SideQuest 显示**绿色圆点**。
-
-- In SideQuest, click the **Install APK from folder** button — it looks like a small box with an arrow, top right area of the window. · 在 SideQuest 中点击 **Install APK from folder** 按钮（右上角一个带箭头的小盒子图标）。
-- Navigate to your Builds folder and select your `.apk` file. · 导航到你的 Builds 文件夹，选中 `.apk` 文件。
-- SideQuest will install it. You will see a progress bar and an **"APK installed successfully"** message. · SideQuest 会安装，期间有进度条，完成后会提示 **"APK installed successfully"**。
-- Put on your headset. Go to your **App Library**. · 戴上头显，打开 **App Library**（应用库）。
-- **Filter by "Unknown Sources"** (top right of the library). Your app will appear there. · 右上角筛选改为 **"Unknown Sources"**（未知来源），你的应用就在那里。
-- Tap it to launch. Your Unity project is now running on the Quest 3! · 点击启动 —— 你的 Unity 项目已经跑在 Quest 3 上了！
-
----
-
-> **❓ Where is my app? · 找不到应用？**
-> Sideloaded apps do **NOT** appear in your main app library. You must filter by **"Unknown Sources"**.
-> 侧载的应用**不会**出现在主应用库。必须切到 **"Unknown Sources"**（未知来源）筛选。
->
-> This is because they are not verified by Meta. Your own builds will always be in Unknown Sources.
-> 因为它们没有经过 Meta 验证。你自己构建的应用永远在 "Unknown Sources"。
+1. Connect and wake the headset (Part 5, Step 4). · 连接并唤醒头显（第五部分第 4 步）。
+2. Open **File → Build Profiles** and select **Meta Quest**. · 打开 **File → Build Profiles**，选择 **Meta Quest**。
+3. Under **Scene List**, click **Add Open Scenes**. Uncheck any scene you don't want; the **top scene** is the one that opens first. · 在 **Scene List** 中点击 **Add Open Scenes**。取消勾选不需要的场景；**最上面的场景**会最先打开。
+4. Under **Run Device**, click **Refresh** and select your Quest. · 在 **Run Device** 中点击 **Refresh** 并选择你的 Quest。
+5. Click **Build And Run**. Choose where to save the `.apk` (make a `Builds` folder **outside** `Assets`), and name it with a version, e.g. `MyProject_v1.apk`. · 点击 **Build And Run**。选择 `.apk` 保存位置（在 `Assets` **以外**新建一个 `Builds` 文件夹），文件名带版本号，例如 `MyProject_v1.apk`。
+6. The first build is slow (10–20 minutes, longer on older Macs). Later builds are much faster. · 第一次打包很慢（10–20 分钟，旧电脑更久），之后会快很多。
+7. When it finishes, the app opens in the headset automatically. · 完成后应用会在头显里自动打开。
 
 ---
 
-### Step 3 — Test and Iterate · 测试与迭代
+### Step 3 — Finding your app later · 之后如何找到你的应用
 
-Each time you make changes in Unity and want to test them on the headset, repeat the **Build → Sideload** process. To speed this up: · 每次修改后，要在头显上测试就重复一次 **Build → Sideload**。提速技巧：
+Your app is installed but does **not** appear in the main library. In the headset, open **App Library** and change the filter (top right) to **Unknown Sources**.
 
-- Use **Build and Run** in Unity if your headset is connected via USB — this skips the manual SideQuest step. · 头显已 USB 连接时可用 **Build and Run**，省掉 SideQuest 手动那一步。
-- Keep your Builds folder clean — name each APK with a version number (`MyProject_v1.apk`, `MyProject_v2.apk`) so you can go back if needed. · 保持 Builds 文件夹整洁 —— 给每个 APK 加版本号（`MyProject_v1.apk`、`MyProject_v2.apk`），方便回滚。
-- Use Unity's **Development Build** checkbox for builds you are testing — this adds the profiler and makes debugging easier. · 测试用的构建勾选 **Development Build** —— 会附带 profiler，调试更方便。
+应用已安装，但**不会**出现在主应用库里。在头显中打开 **App Library（应用库）**，把右上角的筛选改为 **Unknown Sources（未知来源）**。
+
+Apps you build yourself are always under Unknown Sources because they are not distributed through the Meta store.
+
+自己打包的应用不经过 Meta 商店分发，所以永远在 Unknown Sources 里。
+
+---
+
+### Other ways to install an APK · 安装 APK 的其他方式
+
+If someone sends you an `.apk` file (or you used **Build** instead of **Build And Run**):
+
+如果别人发给你一个 `.apk`（或你用了 **Build** 而不是 **Build And Run**）：
+
+- **MQDH:** *Device Manager* → drag the `.apk` onto the window. · **MQDH：** *Device Manager* → 把 `.apk` 拖进窗口。
+- **SideQuest:** click **Install APK from folder** and select the `.apk`. · **SideQuest：** 点击 **Install APK from folder**，选择 `.apk`。
+- **Command line · 命令行:** `adb install -r MyProject_v1.apk` (`adb` is inside Unity's Android SDK `platform-tools` folder · `adb` 位于 Unity 的 Android SDK `platform-tools` 文件夹中).
+
+---
+
+### Tips for faster iteration · 加快迭代的小技巧
+
+- **Test in the Editor first** with the XR Interaction Simulator (Part 7). Only build when you need to feel it in the headset. · **先在编辑器里用 XR Interaction Simulator 测试**（第七部分），需要在头显里亲身体验时再打包。
+- Check **Development Build** while testing — errors then show up in MQDH's log viewer. · 测试期间勾选 **Development Build**，错误信息会显示在 MQDH 的日志查看器里。
+- Build fails? Read the first red error in the **Console**, then check Project Validation (Part 3, Step 5). · 打包失败？先看 **Console** 里第一条红色错误，再检查 Project Validation（第三部分第 5 步）。
 
 ---
 
 ### Checklist · 本章检查清单
 
-- [ ] APK successfully built from Unity · 已在 Unity 中成功构建 APK
-- [ ] APK installed via SideQuest (success message) · 已通过 SideQuest 安装（有成功提示）
-- [ ] App appears under **Unknown Sources** in App Library · 应用出现在 App Library 的 **Unknown Sources** 下
-- [ ] App launches and runs on Quest 3 · 应用能在 Quest 3 上启动运行
+- [ ] Scene contains an **XR Origin (XR Rig)** and no extra Main Camera · 场景中有 **XR Origin (XR Rig)**，没有多余的 Main Camera
+- [ ] Scene added to the Scene List · 场景已加入 Scene List
+- [ ] **Build And Run** succeeded and the app launched in the headset · **Build And Run** 成功，应用在头显中启动
+- [ ] You can find the app again under **Unknown Sources** · 能在 **Unknown Sources** 中再次找到应用
 
 ---
 
-🎉 **Congratulations! You've completed the full pipeline — from empty Unity install to a working build on Quest 3.**
-🎉 **恭喜！你已经完成了从零开始到 Quest 3 运行构建的全流程。**
+**← Previous · 上一章** [Part 5 — Headset Setup](part-5-sidequest-setup.md)
+**Next · 下一章 →** [Part 7 — Test Without a Headset](part-7-test-without-headset.md)
 
 ---
 
-**← Previous · 上一章** [Part 5 — Download & Set Up SideQuest](part-5-sidequest-setup.md)
-**Reference · 参考 →** [Quick Reference & Useful Links](quick-reference.md)
-
----
-
-<sub>*3D Computer Art* by **ShanMu Sun** · © ShanMu Sun · [github.com/&lt;YOUR-GITHUB-USERNAME&gt;](https://github.com/<YOUR-GITHUB-USERNAME>) · Licensed under [CC BY-NC 4.0](../LICENSE)</sub>
+<sub>*3D Computer Art* by **ShanMu Sun** · © ShanMu Sun · [github.com/WeitongSun/3D-Computer-Art](https://github.com/WeitongSun/3D-Computer-Art) · Licensed under [CC BY-NC 4.0](../LICENSE)</sub>
