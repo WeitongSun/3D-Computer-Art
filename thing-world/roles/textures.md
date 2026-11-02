@@ -21,9 +21,9 @@ Landscape first, then every asset maker one by one
 
 ## Checklist
 
-- [ ] Session 5: first ground materials
-- [ ] Session 7: visited everyone
-- [ ] Session 8: final materials
+- [ ] First ground materials made with Landscape
+- [ ] Visited everyone
+- [ ] Final materials exported
 
 ## Every time you hand in
 

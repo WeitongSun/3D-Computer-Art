@@ -23,9 +23,9 @@ Assets Manager (where pieces go), Textures (ground materials), Interaction
 
 ## Checklist
 
-- [ ] Session 5: blockout — simple shapes, right size, paths visible
+- [ ] Ground blockout exported — simple shapes, right size, paths visible
 - [ ] Paths drawn on the Miro CITY MAP
-- [ ] Session 8: final ground
+- [ ] Final ground exported
 
 ## Every time you hand in
 

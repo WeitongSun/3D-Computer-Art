@@ -23,8 +23,8 @@ Sound (effect files), Particles, Landscape
 ## Checklist
 
 - [ ] 3 object ideas on Miro
-- [ ] Session 7: first objects exported
-- [ ] Session 8: final objects
+- [ ] First objects exported
+- [ ] Final objects exported
 
 ## Every time you hand in
 

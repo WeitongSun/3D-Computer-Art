@@ -23,8 +23,8 @@ Skybox — you are the Atmosphere pair. Particles (night effects).
 ## Checklist
 
 - [ ] Palette agreed with Skybox
-- [ ] Session 6: lighting v1 exported
-- [ ] Session 8: final lighting
+- [ ] Lighting v1 exported
+- [ ] Final lighting exported
 
 ## Every time you hand in
 

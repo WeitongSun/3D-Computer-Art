@@ -22,8 +22,8 @@ Lighting — you are the Atmosphere pair. The sun in your sky IS their light.
 ## Checklist
 
 - [ ] Palette agreed with Lighting
-- [ ] Session 6: sky v1 exported
-- [ ] Session 8: final sky
+- [ ] Sky v1 exported
+- [ ] Final sky exported
 
 ## Every time you hand in
 

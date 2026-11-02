@@ -21,9 +21,9 @@ Everyone, and the teacher
 
 ## Checklist
 
-- [ ] Hard drive folders ready (Session 5)
-- [ ] Tracker up to date before each integration
-- [ ] City map sorted by Session 6
+- [ ] Hard drive folders ready
+- [ ] Tracker up to date
+- [ ] City map sorted
 
 ## Every time you hand in
 

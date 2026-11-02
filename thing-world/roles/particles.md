@@ -22,8 +22,8 @@ Lighting, Landscape, Interaction (effects when something happens)
 ## Checklist
 
 - [ ] 3 ideas posted on Miro
-- [ ] Session 7: first effects exported
-- [ ] Session 8: final effects
+- [ ] First effects exported
+- [ ] Final effects exported
 
 ## Every time you hand in
 

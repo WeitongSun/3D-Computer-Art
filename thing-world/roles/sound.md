@@ -24,8 +24,8 @@ Interaction (effects), Landscape, every classmate whose piece needs a sound
 ## Checklist
 
 - [ ] Background idea + 3 ambient sounds
-- [ ] Session 7: first sounds exported
-- [ ] All SOUND ORDERS done by Session 8
+- [ ] First sounds exported
+- [ ] All SOUND ORDERS done
 
 ## Every time you hand in
 
