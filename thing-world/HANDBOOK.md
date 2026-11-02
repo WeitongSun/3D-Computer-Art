@@ -26,8 +26,8 @@ You don't need to know how to program. The hard parts (walking, physics, being g
 5. [Recipes](#5-recipes)
 6. [Test it](#6-test-it)
 7. [Build your city pieces](#7-build-your-city-pieces)
-8. [World building roles](#8-world-building-roles)
-- [Rules for a world that runs smoothly](#rules-for-a-world-that-runs-smoothly)
+8. [World building roles](#8-world-building-roles) — one page per role in [`roles/`](roles/README.md)
+    - [Rules for a world that runs smoothly](#rules-for-a-world-that-runs-smoothly)
 9. [Check and export your work](#9-check-and-export-your-work)
 10. [Animation (and motion capture later)](#10-animation-and-motion-capture-later)
 11. [When something goes wrong](#11-when-something-goes-wrong)
@@ -373,6 +373,8 @@ Want a piece to react (show/hide, play a sound, be picked up)? Click it → **Th
 ## 8. World building roles
 
 *Needs the v1.1 update.* Some students build the shared world instead of 2–4 pieces. Everyone still makes a Thing.
+
+**Your role's own page (steps, limits, checklist):** [Landscape](roles/landscape.md) · [Skybox](roles/skybox.md) · [Lighting](roles/lighting.md) · [Particles](roles/particles.md) · [Sound](roles/sound.md) · [Textures](roles/textures.md) · [Interaction](roles/interaction.md) · [Assets Manager](roles/assets-manager.md)
 
 **City size:** walkable area about **40 × 40 m**; the whole ground ≤ **60 × 60 m**. Small is better — Things meet more often. To feel bigger, go up (hills, stairs, bridges), not out.
 
