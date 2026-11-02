@@ -80,7 +80,9 @@ namespace ThingWorldEditor
 
             // ---------- City pieces ----------
             string[] pieces = FindPrefabs(ThingWorldPaths.PiecesFolder(name));
-            if (pieces.Length == 0)
+            bool hasWorldWork = AssetDatabase.IsValidFolder(ThingWorldPaths.MyWorldFolder(name)) &&
+                                AssetDatabase.FindAssets("", new[] { ThingWorldPaths.MyWorldFolder(name) }).Length > 0;
+            if (pieces.Length == 0 && !hasWorldWork)
                 results.Add(new Result(Level.Warning, "No city pieces yet. Use 'Thing World → 5. Make City Piece From Selected Model'."));
 
             int totalTris = 0;
@@ -121,17 +123,139 @@ namespace ThingWorldEditor
                 results.Add(new Result(l, $"All your pieces together: {totalTris:N0} triangles (budget {cfg.piecesMaxTrianglesPerStudent:N0})."));
             }
 
+            // ---------- World building (coordinators) ----------
+            CheckWorld(name, cfg, results);
+
             // ---------- Anything else ----------
             foreach (string guid in AssetDatabase.FindAssets("t:Scene", new[] { folder }))
             {
                 string p = AssetDatabase.GUIDToAssetPath(guid);
-                if (p != ThingWorldPaths.TestScenePath(name))
+                if (p != ThingWorldPaths.TestScenePath(name) && p != ThingWorldPaths.WorldTestScenePath(name))
                     results.Add(new Result(Level.Warning, $"Extra scene '{Path.GetFileName(p)}' — scenes are not used in the city; only your pieces and your Thing are.", AssetDatabase.LoadAssetAtPath<SceneAsset>(p)));
             }
 
             if (!results.Any(r => r.level != Level.Ok))
                 results.Add(new Result(Level.Ok, "Everything looks good!"));
             return results;
+        }
+
+        // ------------------------------------------------------------------
+        //  world building
+        // ------------------------------------------------------------------
+
+        static void CheckWorld(string name, ThingWorldConfig cfg, List<Result> results)
+        {
+            if (!AssetDatabase.IsValidFolder(ThingWorldPaths.MyWorldFolder(name))) return;
+
+            // Common checks for every world prefab.
+            foreach (string role in ThingWorldPaths.WorldRoles)
+            {
+                foreach (string path in FindPrefabs(ThingWorldPaths.RoleFolder(name, role)))
+                {
+                    var go = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+                    string label = $"{role} '{go.name}'";
+                    CheckMissingScripts(go, label, results);
+                    CheckForbiddenComponents(go, label, results, allowScripts: false, allowLamps: role == "Lighting");
+                    CheckShaders(go, label, results);
+                    CheckTextures(go, label, cfg.maxTextureSize, results);
+                    CheckDependencies(path, name, label, results);
+                    if (go.GetComponentsInChildren<ParticleSystem>(true).Length > 0 && role != "Particles")
+                        results.Add(new Result(Level.Warning, $"{label}: has particles — particles belong in World/Particles so they are counted in the budget.", go));
+                }
+            }
+
+            // Ground: big, walkable, one budget of its own.
+            int groundTris = 0;
+            foreach (string path in FindPrefabs(ThingWorldPaths.RoleFolder(name, "Ground")))
+            {
+                var go = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+                string label = $"Ground '{go.name}'";
+                groundTris += CountTriangles(go);
+                Bounds b = PrefabBounds(go);
+                if (b.size.x > cfg.groundMaxSize || b.size.z > cfg.groundMaxSize)
+                    results.Add(new Result(Level.Warning, $"{label}: is {b.size.x:0}×{b.size.z:0} m — bigger than {cfg.groundMaxSize:0} × {cfg.groundMaxSize:0} m. Keep the walkable part about {cfg.walkableMaxSize:0} × {cfg.walkableMaxSize:0} m — a bigger city feels empty in the headset and Things rarely meet. Check the Blender scale too (1 unit = 1 m).", go));
+                if (go.GetComponentsInChildren<Collider>(true).Length == 0)
+                    results.Add(new Result(Level.Error, $"{label}: has no colliders — nobody can stand on it. ('Fix What I Can' adds them.)", go));
+                if (Mathf.Abs(b.center.x) > 20f || Mathf.Abs(b.center.z) > 20f)
+                    results.Add(new Result(Level.Warning, $"{label}: its center is far from (0,0,0). Model the city center at the Blender origin.", go));
+                if (!IsStatic(go))
+                    results.Add(new Result(Level.Warning, $"{label}: is not marked Static. ('Fix What I Can' does it.)", go));
+            }
+            if (groundTris > 0)
+            {
+                Level l = groundTris > cfg.groundMaxTriangles * 1.5f ? Level.Error : groundTris > cfg.groundMaxTriangles ? Level.Warning : Level.Ok;
+                results.Add(new Result(l, $"Ground: {groundTris:N0} triangles (budget {cfg.groundMaxTriangles:N0})."));
+            }
+
+            // Lighting: a few lamps.
+            int lamps = FindPrefabs(ThingWorldPaths.RoleFolder(name, "Lighting"))
+                .Sum(p => AssetDatabase.LoadAssetAtPath<GameObject>(p).GetComponentsInChildren<Light>(true).Count(l => l.type != LightType.Directional));
+            if (lamps > cfg.maxLampsPerStudent)
+                results.Add(new Result(Level.Error, $"Lighting: {lamps} lights — the whole city may have {cfg.maxLampsPerStudent}. Use glowing materials instead."));
+
+            // Particles: budget.
+            int totalParticles = 0;
+            foreach (string path in FindPrefabs(ThingWorldPaths.RoleFolder(name, "Particles")))
+            {
+                var go = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+                foreach (ParticleSystem ps in go.GetComponentsInChildren<ParticleSystem>(true))
+                {
+                    int max = ps.main.maxParticles;
+                    totalParticles += max;
+                    if (max > cfg.particleMaxPerSystem)
+                        results.Add(new Result(Level.Error, $"Particles '{go.name}/{ps.name}': Max Particles is {max} — limit {cfg.particleMaxPerSystem}.", ps));
+                    var r = ps.GetComponent<ParticleSystemRenderer>();
+                    Material m = r != null ? r.sharedMaterial : null;
+                    if (m == null)
+                        results.Add(new Result(Level.Error, $"Particles '{go.name}/{ps.name}': has no material (it will be pink).", ps));
+                    else if (!IsShaderOk(m.shader, out _))
+                        results.Add(new Result(Level.Error, $"Particles '{go.name}/{ps.name}': material '{m.name}' is pink. Use 'Universal Render Pipeline/Particles/Unlit'.", m));
+                }
+            }
+            if (totalParticles > cfg.particleMaxPerStudent)
+                results.Add(new Result(Level.Error, $"Particles: {totalParticles:N0} max particles in total — the budget is {cfg.particleMaxPerStudent:N0}."));
+
+            // Sounds.
+            int loops = 0, background = 0;
+            foreach (string path in FindPrefabs(ThingWorldPaths.RoleFolder(name, "Sounds")))
+            {
+                var go = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+                foreach (AudioSource a in go.GetComponentsInChildren<AudioSource>(true))
+                {
+                    if (a.clip == null) results.Add(new Result(Level.Warning, $"Sound '{go.name}': has no clip.", go));
+                    if (a.loop) loops++;
+                    if (a.spatialBlend < 0.5f) background++;
+                }
+            }
+            if (loops > cfg.maxLoopingSoundsPerStudent)
+                results.Add(new Result(Level.Warning, $"Sounds: {loops} looping sounds — please keep it to {cfg.maxLoopingSoundsPerStudent} or fewer."));
+            if (background > 1)
+                results.Add(new Result(Level.Warning, $"Sounds: {background} background (everywhere) sounds — the city should have only one."));
+
+            // Sky materials.
+            foreach (string guid in AssetDatabase.FindAssets("t:Material", new[] { ThingWorldPaths.RoleFolder(name, "Sky") }))
+            {
+                var m = AssetDatabase.LoadAssetAtPath<Material>(AssetDatabase.GUIDToAssetPath(guid));
+                if (m == null) continue;
+                if (m.shader == null || !(m.shader.name == "ThingWorld/Sky" || m.shader.name.StartsWith("Skybox/", StringComparison.Ordinal)))
+                    results.Add(new Result(Level.Warning, $"Sky '{m.name}': uses '{m.shader?.name}'. Use 'World Building → Sky: Create Sky Material'.", m));
+                foreach (int id in m.GetTexturePropertyNameIDs())
+                {
+                    Texture t = m.GetTexture(id);
+                    if (t != null && (t.width > cfg.skyMaxTextureSize || t.height > cfg.skyMaxTextureSize))
+                        results.Add(new Result(Level.Warning, $"Sky '{m.name}': texture '{t.name}' is {t.width}×{t.height}. Max is {cfg.skyMaxTextureSize}×{cfg.skyMaxTextureSize / 2}.", t));
+                }
+            }
+
+            // Interactive objects need a World Interactable.
+            foreach (string path in FindPrefabs(ThingWorldPaths.RoleFolder(name, "Interactive")))
+            {
+                var go = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+                if (go.GetComponentInChildren<WorldInteractable>(true) == null)
+                    results.Add(new Result(Level.Warning, $"Interactive '{go.name}': has no World Interactable. Use 'Thing World → 6. Make Selected Object Interactive'.", go));
+                if (CountTriangles(go) > cfg.piecesMaxTrianglesPerStudent / 2)
+                    results.Add(new Result(Level.Warning, $"Interactive '{go.name}': {CountTriangles(go):N0} triangles — interactive objects should be small and light.", go));
+            }
         }
 
         // ------------------------------------------------------------------
@@ -156,10 +280,24 @@ namespace ThingWorldEditor
             }
         }
 
-        static void CheckForbiddenComponents(GameObject go, string label, List<Result> results, bool allowScripts)
+        static readonly Type[] AllowedPieceScripts = { typeof(WorldInteractable), typeof(SimpleMover), typeof(DayNightParticles) };
+
+        static void CheckForbiddenComponents(GameObject go, string label, List<Result> results, bool allowScripts, bool allowLamps = false)
         {
-            if (go.GetComponentsInChildren<Light>(true).Length > 0)
-                results.Add(new Result(Level.Error, $"{label}: contains a Light. The city has one sun — delete it (glowing materials are fine).", go));
+            foreach (Light l in go.GetComponentsInChildren<Light>(true))
+            {
+                if (!allowLamps)
+                {
+                    results.Add(new Result(Level.Error, $"{label}: contains a Light. Only the Lighting coordinator adds lights (glowing materials are fine — use those).", go));
+                    break;
+                }
+                if (l.type == LightType.Directional)
+                    results.Add(new Result(Level.Error, $"{label}: has a Directional Light. The city has one sun already — use Point or Spot lights.", go));
+                else if (l.shadows != LightShadows.None)
+                    results.Add(new Result(Level.Warning, $"{label}: light '{l.name}' casts shadows — turn Shadow Type to 'No Shadows' (too slow on Quest).", l));
+                if (l.range > 20f)
+                    results.Add(new Result(Level.Warning, $"{label}: light '{l.name}' has range {l.range:0} m — keep it under 15–20 m.", l));
+            }
             if (go.GetComponentsInChildren<Camera>(true).Length > 0)
                 results.Add(new Result(Level.Error, $"{label}: contains a Camera. Delete it.", go));
             if (go.GetComponentsInChildren<AudioListener>(true).Length > 0)
@@ -174,7 +312,11 @@ namespace ThingWorldEditor
                 foreach (MonoBehaviour mb in go.GetComponentsInChildren<MonoBehaviour>(true))
                 {
                     if (mb == null) continue;
-                    results.Add(new Result(Level.Error, $"{label}: has a script ({mb.GetType().Name}). City pieces can't have scripts — put behavior in your Thing.", go));
+                    if (AllowedPieceScripts.Any(t => t.IsInstanceOfType(mb))) continue;
+                    string ns = mb.GetType().Namespace ?? "";
+                    if (ns.StartsWith("UnityEngine.XR.Interaction", StringComparison.Ordinal)) continue;
+                    if (ns.StartsWith("UnityEngine.Rendering", StringComparison.Ordinal)) continue; // URP adds data components to lights/cameras
+                    results.Add(new Result(Level.Error, $"{label}: has a script ({mb.GetType().Name}). City pieces can't have scripts — put behavior in your Thing, or use 'World Interactable' (menu 6).", go));
                     break;
                 }
             }
@@ -186,7 +328,7 @@ namespace ThingWorldEditor
             if (s == null) return false;
             string n = s.name;
             if (n == "Hidden/InternalErrorShader") return false;
-            string[] ok = { "Universal Render Pipeline/", "Shader Graphs/", "TextMeshPro/", "Sprites/", "UI/", "Skybox/" };
+            string[] ok = { "Universal Render Pipeline/", "Shader Graphs/", "TextMeshPro/", "Sprites/", "UI/", "Skybox/", "ThingWorld/" };
             if (ok.Any(p => n.StartsWith(p, StringComparison.Ordinal))) return true;
             unknown = true;
             return true;
@@ -234,6 +376,7 @@ namespace ThingWorldEditor
                 if (dep == assetPath) continue;
                 if (ThingWorldPaths.IsInside(dep, mine)) continue;
                 if (ThingWorldPaths.IsInside(dep, ThingWorldPaths.Root)) continue;
+                if (ThingWorldPaths.IsInside(dep, ThingWorldPaths.SharedFolder)) continue; // shared library, imported separately
                 if (dep.StartsWith("Packages/", StringComparison.Ordinal)) continue;
                 if (dep.StartsWith("Resources/unity_builtin_extra", StringComparison.Ordinal)) continue;
                 if (dep.StartsWith("Library/", StringComparison.Ordinal)) continue;
@@ -298,10 +441,15 @@ namespace ThingWorldEditor
             foreach (Transform t in go.GetComponentsInChildren<Transform>(true))
             {
                 if (t.GetComponent<Renderer>() == null) continue;
+                if (IsMovable(t)) continue;
                 if ((GameObjectUtility.GetStaticEditorFlags(t.gameObject) & StaticEditorFlags.BatchingStatic) == 0) return false;
             }
             return true;
         }
+
+        /// <summary>Objects under a World Interactable or Simple Mover move, so they must NOT be static.</summary>
+        public static bool IsMovable(Transform t) =>
+            t.GetComponentInParent<WorldInteractable>(true) != null || t.GetComponentInParent<SimpleMover>(true) != null;
 
         // ------------------------------------------------------------------
         //  automatic fixes
@@ -312,7 +460,10 @@ namespace ThingWorldEditor
             int fixes = 0;
             ThingWorldConfig cfg = ThingWorldConfig.Load() ?? ScriptableObject.CreateInstance<ThingWorldConfig>();
 
-            foreach (string path in FindPrefabs(ThingWorldPaths.PiecesFolder(name)))
+            var fixable = FindPrefabs(ThingWorldPaths.PiecesFolder(name))
+                .Concat(FindPrefabs(ThingWorldPaths.RoleFolder(name, "Ground")))
+                .Concat(FindPrefabs(ThingWorldPaths.RoleFolder(name, "Interactive")));
+            foreach (string path in fixable)
             {
                 GameObject root = PrefabUtility.LoadPrefabContents(path);
                 bool changed = false;
@@ -321,6 +472,11 @@ namespace ThingWorldEditor
                     foreach (Transform t in root.GetComponentsInChildren<Transform>(true))
                     {
                         GameObject g = t.gameObject;
+                        if (IsMovable(t))
+                        {
+                            if (GameObjectUtility.GetStaticEditorFlags(g) != 0) { GameObjectUtility.SetStaticEditorFlags(g, (StaticEditorFlags)0); changed = true; }
+                            continue;
+                        }
                         if (g.GetComponent<Renderer>() != null &&
                             (GameObjectUtility.GetStaticEditorFlags(g) & StaticEditorFlags.BatchingStatic) == 0)
                         {

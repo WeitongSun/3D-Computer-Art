@@ -26,6 +26,20 @@ public class ThingWorldConfig : ScriptableObject
 
     [Header("Textures")]
     public int maxTextureSize = 2048;
+    [Tooltip("Sky panoramas may be bigger than other textures.")]
+    public int skyMaxTextureSize = 4096;
+
+    [Header("World building budgets (checked by 'Check My Work')")]
+    public int groundMaxTriangles = 100000;
+    [Tooltip("Whole ground, meters. Keep the walkable part about 40 × 40 m so Things meet each other.")]
+    public float groundMaxSize = 60f;
+    public float walkableMaxSize = 40f;
+    [Tooltip("Point/spot lights per Lighting coordinator. Lights are expensive on Quest.")]
+    public int maxLampsPerStudent = 4;
+    public int particleMaxPerSystem = 500;
+    public int particleMaxPerStudent = 1500;
+    [Tooltip("Looping sounds per Sound coordinator.")]
+    public int maxLoopingSoundsPerStudent = 8;
 
     static ThingWorldConfig cached;
 

@@ -307,6 +307,9 @@ namespace ThingWorldEditor
             {
                 var rig = (GameObject)PrefabUtility.InstantiatePrefab(rigPrefab, scene);
                 rig.transform.position = new Vector3(0f, 0f, -3f);
+                // A slightly wider body keeps the visitor's eyes away from walls (default is 0.1 m).
+                var body = rig.GetComponentInChildren<CharacterController>(true);
+                if (body != null) body.radius = 0.25f;
             }
             else
             {
@@ -331,7 +334,7 @@ namespace ThingWorldEditor
                 return;
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
 
-            BuildScene(ThingWorldPaths.WorldScenePath, groundSize: 100f, withDummies: false, secondsPerDay: 300f, spawnRadius: 30f);
+            BuildScene(ThingWorldPaths.WorldScenePath, groundSize: 40f, withDummies: false, secondsPerDay: 300f, spawnRadius: 15f);
             EditorBuildSettings.scenes = new[] { new EditorBuildSettingsScene(ThingWorldPaths.WorldScenePath, true) };
             EditorUtility.DisplayDialog("Thing World",
                 "City scene created and set as the scene that builds.\n\n" +
@@ -355,6 +358,11 @@ namespace ThingWorldEditor
                 GetOrAdd<NavMeshModifier>(t.gameObject).ignoreFromBuild = true;
             foreach (var c in Object.FindObjectsByType<CharacterController>(FindObjectsSortMode.None))
                 GetOrAdd<NavMeshModifier>(c.gameObject).ignoreFromBuild = true;
+            // Things that move (pickups, doors, lifts) must not carve holes into the walkable ground.
+            foreach (var w in Object.FindObjectsByType<WorldInteractable>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+                if (w.canBePickedUp) GetOrAdd<NavMeshModifier>(w.gameObject).ignoreFromBuild = true;
+            foreach (var m in Object.FindObjectsByType<SimpleMover>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+                GetOrAdd<NavMeshModifier>(m.gameObject).ignoreFromBuild = true;
 
             surface.BuildNavMesh();
             if (surface.navMeshData == null)

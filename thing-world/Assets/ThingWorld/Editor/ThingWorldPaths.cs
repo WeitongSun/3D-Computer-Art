@@ -32,6 +32,11 @@ namespace ThingWorldEditor
         public static string AnimationFolder(string name) => $"{CreatorFolder(name)}/Animation";
         public static string PiecesFolder(string name) => $"{CreatorFolder(name)}/Pieces";
         public static string SoundsFolder(string name) => $"{CreatorFolder(name)}/Sounds";
+        public const string SharedFolder = "Assets/Shared";
+        public static readonly string[] WorldRoles = { "Ground", "Sky", "Lighting", "Particles", "Sounds", "Interactive" };
+        public static string MyWorldFolder(string name) => $"{CreatorFolder(name)}/World";
+        public static string RoleFolder(string name, string role) => $"{MyWorldFolder(name)}/{role}";
+        public static string WorldTestScenePath(string name) => $"{CreatorFolder(name)}/{name}_WorldTest.unity";
         public static string ClassName(string name) => $"{name}Thing";
         public static string ScriptPath(string name) => $"{ScriptsFolder(name)}/{ClassName(name)}.cs";
         public static string PrefabPath(string name) => $"{ThingsFolder(name)}/{ClassName(name)}.prefab";
