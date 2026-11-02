@@ -26,7 +26,8 @@ You don't need to know how to program. The hard parts (walking, physics, being g
 5. [Recipes](#5-recipes)
 6. [Test it](#6-test-it)
 7. [Build your city pieces](#7-build-your-city-pieces)
-8. [Rules for a world that runs smoothly](#rules-for-a-world-that-runs-smoothly)
+8. [World building roles](#8-world-building-roles)
+- [Rules for a world that runs smoothly](#rules-for-a-world-that-runs-smoothly)
 9. [Check and export your work](#9-check-and-export-your-work)
 10. [Animation (and motion capture later)](#10-animation-and-motion-capture-later)
 11. [When something goes wrong](#11-when-something-goes-wrong)
@@ -365,6 +366,31 @@ Your pieces are part of one city made by 16 people. Plan them with the class fir
 
 Materials: use **Universal Render Pipeline → Lit** (or **Unlit** for flat color / glowing looks). For glow, give a Lit material an **Emission** color — never a Light.
 
+Want a piece to react (show/hide, play a sound, be picked up)? Click it → **Thing World → 6. Make Selected Object Interactive**, then set **WHEN** and **DO** in the Inspector. No code.
+
+---
+
+## 8. World building roles
+
+*Needs the v1.1 update.* Some students build the shared world instead of 2–4 pieces. Everyone still makes a Thing.
+
+**City size:** walkable area about **40 × 40 m**; the whole ground ≤ **60 × 60 m**. Small is better — Things meet more often. To feel bigger, go up (hills, stairs, bridges), not out.
+
+| Role | Menu (Thing World → World Building →) | Limits |
+|---|---|---|
+| Landscape | put the FBX in `Pieces`, click it → **Ground: Make Ground From Selected Model** | ≤ 100,000 triangles, ≤ 60 × 60 m, center at (0,0,0) |
+| Skybox | **Sky: Create Sky Material** | panorama ≤ 4096 × 2048 |
+| Lighting | **Lighting: Create Lighting Settings** · **Lighting: Create Lamp** | lamps ≤ 4, no shadows |
+| Particles | **Particles: Create Particle Effect** (Show When: day / night / sunrise-sunset) | ≤ 500 per effect, ≤ 1,500 total |
+| Sound | put the clip in `Sounds`, click it → **Sound: Make Ambient Sound** (heard near one spot) or **Make Background Sound** (everywhere, only one) | ≤ 8 looping sounds |
+| Textures | **Shared: Create Shared Material** · **Shared: Export My Shared Library** | textures ≤ 2048 px |
+| Interaction | **6. Make Selected Object Interactive** | small objects |
+
+- **Skybox + Lighting work as a pair:** the sun in the sky *is* the light on the ground. Agree on colors for morning, day, sunset and night first.
+- **Sound + Interaction:** Sound makes the effect files (door creak, beep); Interaction connects them to objects.
+- **Test everything together:** **World Building → Open My World Test Scene** puts your sky, lighting, ground and world prefabs in one scene. Changed something? **Rebuild My World Test Scene.**
+- Your work is saved in `Assets/Creators/YourName/World/…` and exported with **4. Export My Work** as usual.
+
 ---
 
 ## Rules for a world that runs smoothly
@@ -380,7 +406,7 @@ The headset is a phone-sized computer drawing two images 72–90 times per secon
 | Textures ≤ **2048 px** (1024 is better) | Headset memory. |
 | Real-world scale, origin at the bottom | Pieces line up, Things walk on them. |
 | Only **URP/Lit, URP/Unlit or Shader Graph** materials | Other shaders turn pink or appear in one eye only. |
-| **No lights, cameras, skies, post-processing, audio listeners or scripts** in pieces | The world has one sun and one camera. Behavior belongs in your Thing. |
+| **No lights, cameras, skies, post-processing, audio listeners or scripts** in pieces (except World Interactable, and lamps made by Lighting) | The world has one sun and one camera. Behavior belongs in your Thing. |
 | Floors and stairs: slopes ≤ 45°, steps ≤ 0.4 m | Things can only walk where it's walkable. |
 | Don't edit `Assets/ThingWorld`, `Assets/Samples` or anyone else's folder | Everyone shares them. |
 | Don't write `Start()`, `Update()` or `Awake()` in your Thing | Use `OnBorn()` and `EveryFrame()`. |
@@ -392,7 +418,7 @@ The headset is a phone-sized computer drawing two images 72–90 times per secon
 
 1. **Thing World → 3. Check My Work.** Red ✖ must be fixed; yellow ⚠ should be. Click **Show** to find the problem, **Fix What I Can** for the automatic fixes (static flags, colliders, oversized textures).
 2. **Thing World → 4. Export My Work.** A file called `YourName_ThingWorld_<date>.unitypackage` appears on your Desktop.
-3. Hand in that one file. You can export again any time; the newest one counts.
+3. Copy that one file to the class hard drive: `01_Hand-in/YourName`. You can export again any time; the newest one counts.
 
 ---
 
