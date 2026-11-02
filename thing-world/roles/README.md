@@ -1,6 +1,6 @@
 # World building roles
 
-Everyone makes a Thing. These roles build the shared world instead of 2–4 city pieces.
+Everyone makes a Thing. Pick one role. World roles build the shared world instead of 2–4 city pieces; Asset Makers make the pieces.
 
 **City size:** walkable ~40 × 40 m, whole ground ≤ 60 × 60 m.
 
@@ -14,5 +14,4 @@ Everyone makes a Thing. These roles build the shared world instead of 2–4 city
 | [Textures](textures.md) | 1–2 people |
 | [Interaction coordinator](interaction.md) | 1–2 people |
 | [Assets Manager](assets-manager.md) | 1 person |
-
-Everyone else: your Thing + 2–4 city pieces — see the [Handbook](../HANDBOOK.md#7-build-your-city-pieces).
+| [Asset Maker](asset-maker.md) | everyone else |

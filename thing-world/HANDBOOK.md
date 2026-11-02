@@ -374,7 +374,7 @@ Want a piece to react (show/hide, play a sound, be picked up)? Click it → **Th
 
 *Needs the v1.1 update.* Some students build the shared world instead of 2–4 pieces. Everyone still makes a Thing.
 
-**Your role's own page (steps, limits, checklist):** [Landscape](roles/landscape.md) · [Skybox](roles/skybox.md) · [Lighting](roles/lighting.md) · [Particles](roles/particles.md) · [Sound](roles/sound.md) · [Textures](roles/textures.md) · [Interaction](roles/interaction.md) · [Assets Manager](roles/assets-manager.md)
+**Your role's own page (steps, limits, checklist):** [Landscape](roles/landscape.md) · [Skybox](roles/skybox.md) · [Lighting](roles/lighting.md) · [Particles](roles/particles.md) · [Sound](roles/sound.md) · [Textures](roles/textures.md) · [Interaction](roles/interaction.md) · [Assets Manager](roles/assets-manager.md) · [Asset Maker](roles/asset-maker.md)
 
 **City size:** walkable area about **40 × 40 m**; the whole ground ≤ **60 × 60 m**. Small is better — Things meet more often. To feel bigger, go up (hills, stairs, bridges), not out.
 
