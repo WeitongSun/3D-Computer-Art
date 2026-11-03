@@ -6,12 +6,12 @@
 
 ## How
 
-1. Model the ground in Blender in meters (1 unit = 1 m), city center at the origin (0,0,0).
+1. Both of you work in **one Blender file** for the whole island. Model in meters (1 unit = 1 m), island center at the origin (0,0,0).
 2. Keep the walkable part about **40 × 40 m**; the whole ground ≤ **60 × 60 m**. Go up (hills, stairs, bridges), not out.
 3. Slopes ≤ 45°, steps ≤ 0.4 m — otherwise Things can't walk there.
-4. Export FBX into `Assets/Creators/YourName/Pieces`, click it → **World Building → Ground: Make Ground From Selected Model**.
+4. One person exports the FBX as `Island.fbx` into `Assets/Creators/YourName/Pieces`, clicks it → **World Building → Ground: Make Ground From Selected Model**. Do this menu **only once**.
 5. **World Building → Rebuild My World Test Scene** → Play. Do the blobs walk everywhere they should?
-6. Re-export the FBX with the same name to update; the prefab follows.
+6. To update: re-export from Blender to the **same place, same name** (`Island.fbx`) and overwrite. The ground in Unity updates by itself — don't run the menu again.
 
 ## Limits
 
@@ -41,8 +41,14 @@ Apply All Transforms in Blender, and in the FBX export tick **Apply Transform**.
 **The blobs don't walk on some parts.**
 Too steep (over 45°) or steps too high (over 0.4 m). Make a ramp, or lower the step.
 
-**I updated the FBX — do I run the menu again?**
-No. Re-export with the same file name; the ground prefab updates by itself.
+**I updated the ground — do I run the menu again?**
+No! Run **Ground: Make Ground From Selected Model** only **once**. After that, just re-export from Blender to the **same place with the same file name** (e.g. always `Island.fbx`) and overwrite it — the ground prefab in Unity updates by itself. Running the menu again makes a second ground (`_1`), and the city ends up with two grounds on top of each other. Made one by accident? Delete the extra `_1` prefab in `World/Ground`.
+
+**We are two people — how do we share the ground?**
+Use **one Blender file** for the whole island. Agree on **one person** who exports, always as `Island.fbx`, into their own `Pieces` folder.
+
+**Can we change the ground later?**
+Yes, but big changes (moving paths, changing heights) only in the first weeks — other people place their pieces on your ground. After that, only details. Never rename the file.
 
 **How big should each of the 5 zones be?**
 The walkable island is about 40 × 40 m, so each zone is roughly 15 × 15 m. Draw it on the Miro city map first.
