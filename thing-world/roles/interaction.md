@@ -26,6 +26,28 @@ Sound (effect files), Particles, Landscape
 - [ ] First objects exported
 - [ ] Final objects exported
 
+## Common questions
+
+**Menu 6 says it's a model file, not a prefab.**
+Make it a city piece first (menu 5), then use menu 6 on the prefab.
+
+**Nothing happens when I come near.**
+Check **React To Visitor Near** is ticked and the reaction has something filled in. The blue circle in the Scene view shows the distance.
+
+**How do I test picking up in the simulator?**
+Press ] for the right hand, point at the object, hold G to grab, move, release G to throw.
+
+**My object floats / doesn't fall.**
+Only objects with **Can Be Picked Up** fall. Everything else stays where you put it.
+
+**How do I add a sound?**
+Ask the Sound person for the file (Miro SOUND ORDERS), then drag it into the reaction's Sound slot.
+
+**Doors?**
+Covered in class — a door needs a hinge so it turns around its edge, not its center.
+
+More: [questions for all roles](FAQ.md)
+
 ## Every time you hand in
 
-**3. Check My Work** (no red) → **4. Export My Work** → copy the file to the hard drive `01_Hand-in/YourName`.
+**3. Check My Work** (no red) → **4. Export My Work** → copy the file to the hard drive `01_Hand-in/YourRole`.

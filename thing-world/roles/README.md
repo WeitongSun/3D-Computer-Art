@@ -15,3 +15,5 @@ Everyone makes a Thing. Pick one role. World roles build the shared world instea
 | [Interaction coordinator](interaction.md) | 1–2 people |
 | [Assets Manager](assets-manager.md) | 1 person |
 | [Asset Maker](asset-maker.md) | everyone else |
+
+Stuck? See [common questions](FAQ.md) — and your role page's own questions at the bottom.

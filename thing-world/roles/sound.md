@@ -27,6 +27,25 @@ Interaction (effects), Landscape, every classmate whose piece needs a sound
 - [ ] First sounds exported
 - [ ] All SOUND ORDERS done
 
+## Common questions
+
+**Ambient or background?**
+Ambient = heard near one spot, louder when you get closer (fountain, wind). Background = heard everywhere at the same volume (music). Only one background sound for the whole city.
+
+**Where does an ambient sound go in the city?**
+Put a sticky on the Miro city map where it belongs. The teacher places it when building the city.
+
+**How do I hear it?**
+Drag the sound prefab into your World Test Scene, press Play, walk closer and further away.
+
+**My sound has a gap or click when it loops.**
+Trim it so the end flows into the start, or add short fades in Audacity.
+
+**Where do I get sounds?**
+Record your own, make them, or use free libraries (e.g. freesound.org — check the license).
+
+More: [questions for all roles](FAQ.md)
+
 ## Every time you hand in
 
-**3. Check My Work** (no red) → **4. Export My Work** → copy the file to the hard drive `01_Hand-in/YourName`.
+**3. Check My Work** (no red) → **4. Export My Work** → copy the file to the hard drive `01_Hand-in/YourRole`.

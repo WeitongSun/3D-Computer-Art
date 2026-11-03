@@ -27,6 +27,28 @@ Assets Manager (where pieces go), Textures (ground materials), Interaction
 - [ ] Paths drawn on the Miro CITY MAP
 - [ ] Final ground exported
 
+## Common questions
+
+**My ground is huge / tiny in Unity.**
+Blender scale: 1 unit = 1 m. Check the size in Blender's N panel before export, and **Apply All Transforms** (Ctrl+A).
+
+**My ground is tilted or lying on its side.**
+Apply All Transforms in Blender, and in the FBX export tick **Apply Transform**.
+
+**How do I walk on it?**
+**Rebuild My World Test Scene** → Play. The grey placeholder ground hides automatically once your ground exists.
+
+**The blobs don't walk on some parts.**
+Too steep (over 45°) or steps too high (over 0.4 m). Make a ramp, or lower the step.
+
+**I updated the FBX — do I run the menu again?**
+No. Re-export with the same file name; the ground prefab updates by itself.
+
+**How big should each of the 5 zones be?**
+The walkable island is about 40 × 40 m, so each zone is roughly 15 × 15 m. Draw it on the Miro city map first.
+
+More: [questions for all roles](FAQ.md)
+
 ## Every time you hand in
 
-**3. Check My Work** (no red) → **4. Export My Work** → copy the file to the hard drive `01_Hand-in/YourName`.
+**3. Check My Work** (no red) → **4. Export My Work** → copy the file to the hard drive `01_Hand-in/YourRole`.

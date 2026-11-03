@@ -25,6 +25,22 @@ Landscape first, then every asset maker one by one
 - [ ] Visited everyone
 - [ ] Final materials exported
 
+## Common questions
+
+**How do others use my materials?**
+Export your library (Shared: Export My Shared Library), put it in `02_Shared` on the hard drive. Others double-click it → Import, then drag the material onto their model.
+
+**I updated a material — do people need to re-import?**
+Yes, export and they import again. Everything using it updates automatically.
+
+**A texture looks blurry or too big.**
+Change **Tiling** on the material (e.g. 4 × 4 for a large wall). Check the size: is a brick about 20 cm?
+
+**Do I make everyone use the same materials?**
+No. Everyone keeps their own style. You help their pieces sit well in the city: texture scale, brightness, where they meet the ground.
+
+More: [questions for all roles](FAQ.md)
+
 ## Every time you hand in
 
-**3. Check My Work** (no red) → **4. Export My Work** → copy the file to the hard drive `01_Hand-in/YourName`.
+**3. Check My Work** (no red) → **4. Export My Work** → copy the file to the hard drive `01_Hand-in/YourRole`.

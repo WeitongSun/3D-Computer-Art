@@ -26,6 +26,28 @@ Skybox — you are the Atmosphere pair. Particles (night effects).
 - [ ] Lighting v1 exported
 - [ ] Final lighting exported
 
+## Common questions
+
+**Which file do I change?**
+Your **Lighting** asset in `World/Lighting` — not the Sun object in the scene.
+
+**My changes don't show.**
+Press Play. The lighting only runs in Play mode. Changes you make to the Lighting asset during Play are kept.
+
+**Everything is too dark at night.**
+Raise **Night Intensity** and the night ambient colors. Nobody can see a pitch-black world in VR.
+
+**Fog hides everything.**
+Lower the fog density (0.005–0.015 is usually enough).
+
+**Can I add more than 4 lamps?**
+No — lights are expensive in the headset. For anything else that glows, use an emissive material.
+
+**My lamp shows a red error in Check My Work.**
+You need the latest update (v1.1 fixed this).
+
+More: [questions for all roles](FAQ.md)
+
 ## Every time you hand in
 
-**3. Check My Work** (no red) → **4. Export My Work** → copy the file to the hard drive `01_Hand-in/YourName`.
+**3. Check My Work** (no red) → **4. Export My Work** → copy the file to the hard drive `01_Hand-in/YourRole`.

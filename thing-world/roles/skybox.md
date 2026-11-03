@@ -25,6 +25,25 @@ Lighting — you are the Atmosphere pair. The sun in your sky IS their light.
 - [ ] Sky v1 exported
 - [ ] Final sky exported
 
+## Common questions
+
+**Where do I see my sky?**
+It is applied to the scene you have open. Open your World Test Scene first, then create the sky.
+
+**The sky doesn't change from day to night.**
+It only changes in Play mode. Press Play and wait — a day is 2 minutes in the test scene.
+
+**My panorama looks stretched.**
+It must be 2:1 (e.g. 4096 × 2048), equirectangular. Square images will stretch.
+
+**My panorama covers the sun and stars.**
+Use transparency (alpha) in the image where you want the sky to show through, or lower **Panorama strength**.
+
+**Where is the sun color?**
+The sun's color comes from Lighting (DJ). Agree on it together.
+
+More: [questions for all roles](FAQ.md)
+
 ## Every time you hand in
 
-**3. Check My Work** (no red) → **4. Export My Work** → copy the file to the hard drive `01_Hand-in/YourName`.
+**3. Check My Work** (no red) → **4. Export My Work** → copy the file to the hard drive `01_Hand-in/YourRole`.

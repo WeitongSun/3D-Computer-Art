@@ -420,7 +420,7 @@ The headset is a phone-sized computer drawing two images 72–90 times per secon
 
 1. **Thing World → 3. Check My Work.** Red ✖ must be fixed; yellow ⚠ should be. Click **Show** to find the problem, **Fix What I Can** for the automatic fixes (static flags, colliders, oversized textures).
 2. **Thing World → 4. Export My Work.** A file called `YourName_ThingWorld_<date>.unitypackage` appears on your Desktop.
-3. Copy that one file to the class hard drive: `01_Hand-in/YourName`. You can export again any time; the newest one counts.
+3. Copy that one file to the class hard drive: `01_Hand-in/YourRole`. You can export again any time; the newest one counts.
 
 ---
 

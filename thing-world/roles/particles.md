@@ -25,6 +25,22 @@ Lighting, Landscape, Interaction (effects when something happens)
 - [ ] First effects exported
 - [ ] Final effects exported
 
+## Common questions
+
+**I don't see my particles.**
+Drag the particle prefab into your test scene and press Play. If Show When is Only At Night, wait for night.
+
+**My particles are pink squares.**
+The material is missing. Use the particle material the tool made, or Shader → Universal Render Pipeline/Particles/Unlit.
+
+**How do I make them look like fireflies / rain / smoke?**
+In the Particle System: Shape (where they start), Start Speed, Gravity Modifier (rain), Color over Lifetime (fade), Noise (wobbly fireflies).
+
+**Check My Work says too many particles.**
+Lower **Max Particles** in the Main module. Fewer, bigger, slower particles look better in VR anyway.
+
+More: [questions for all roles](FAQ.md)
+
 ## Every time you hand in
 
-**3. Check My Work** (no red) → **4. Export My Work** → copy the file to the hard drive `01_Hand-in/YourName`.
+**3. Check My Work** (no red) → **4. Export My Work** → copy the file to the hard drive `01_Hand-in/YourRole`.

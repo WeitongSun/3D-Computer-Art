@@ -32,6 +32,25 @@ Assets Manager (where it goes), Landscape (paths), Textures, Sound (if your piec
 - [ ] First piece exported
 - [ ] All pieces exported
 
+## Common questions
+
+**My model is huge / tiny / tilted in Unity.**
+Blender: 1 unit = 1 m, Apply All Transforms (Ctrl+A), origin at the bottom center. FBX export: tick Apply Transform.
+
+**My textures are missing in Unity.**
+Export FBX with Path Mode: Copy and the embed button on, or copy the image files into your folder and drag them onto the material.
+
+**Check My Work says my piece is outside my folder.**
+Everything (models, textures, materials) must be inside `Assets/Creators/YourName`. Move it there.
+
+**Too many triangles.**
+Use Blender's Decimate modifier. All your pieces together ≤ 40,000.
+
+**Where does my piece go in the city?**
+Your sticky note on the Miro city map. The Assets Manager and the teacher place it.
+
+More: [questions for all roles](FAQ.md)
+
 ## Every time you hand in
 
-**3. Check My Work** (no red) → **4. Export My Work** → copy the file to the hard drive `01_Hand-in/YourName`.
+**3. Check My Work** (no red) → **4. Export My Work** → copy the file to the hard drive `01_Hand-in/YourRole`.
